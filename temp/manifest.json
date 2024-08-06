@@ -1,0 +1,43 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.13/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.13",
+  "id": "a567e120-53b1-11ef-ade6-8571dde6e7c0",
+  "version": "0.0.1",
+  "packageName": "perksweetconnector",
+  "developer": {
+    "name": "perksweet",
+    "websiteUrl": "https://cb7a-2405-201-200c-926d-acb2-8509-44a9-69ad.ngrok-free.app",
+    "privacyUrl": "https://cb7a-2405-201-200c-926d-acb2-8509-44a9-69ad.ngrok-free.app/privacy.html",
+    "termsOfUseUrl": "https://cb7a-2405-201-200c-926d-acb2-8509-44a9-69ad.ngrok-free.app/tou.html"
+  },
+  "name": {
+    "short": "perksweetConnector",
+    "full": "perksweetConnector"
+  },
+  "description": {
+    "short": "TODO: add short description here",
+    "full": "TODO: add full description here"
+  },
+  "icons": {
+    "outline": "icon-outline.png",
+    "color": "icon-color.png"
+  },
+  "accentColor": "#D85028",
+  "connectors": [
+    {
+      "connectorId": "5c6aa772-4d39-45ea-98a9-a53ab178a434",
+      "configurationUrl": "https://cb7a-2405-201-200c-926d-acb2-8509-44a9-69ad.ngrok-free.app/perksweetConnector/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}",
+      "scopes": [
+        "team"
+      ]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    "cb7a-2405-201-200c-926d-acb2-8509-44a9-69ad.ngrok-free.app"
+  ],
+  "showLoadingIndicator": false
+}
