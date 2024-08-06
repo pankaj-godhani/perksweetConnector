@@ -2,7 +2,7 @@ import Axios from "axios";
 import { Request } from "express";
 import { ConnectorDeclaration, IConnector, PreventIframe } from "express-msteams-host";
 import * as debug from "debug";
-import JsonDB = require("../../../node_modules/@types/node-json-db")
+const JsonDB = require("../../../node_modules/@types/node-json-db");
 
 const log = debug("msteams");
 
