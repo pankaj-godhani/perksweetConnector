@@ -14,7 +14,6 @@ interface IPerksweetConnectorData {
     user: string;
     appType: string;
     groupName: string;
-    color: string;
     existing: boolean;
 }
 
@@ -34,20 +33,56 @@ export class PerksweetConnector implements IConnector {
         this.connectors = new JsonDB("connectors", true, false);
     }
 
-    public Connect(req: Request) {
-        if (req.body.state === "myAppsState") {
-            this.connectors.push("/connectors[]", {
-                appType: req.body.appType,
-                color: req.body.color,
-                existing: true,
-                groupName: req.body.groupName,
-                user: req.body.user,
-                webhookUrl: req.body.webhookUrl
-            });
+    public async Connect(req: any) {
+        try {
+
+            const request = {
+                email: req.body.email,
+                password: req.body.password,
+                webhook: req.body.webhookUrl
+            };
+
+            return await Axios.post(
+                process.env.BACKEND_ENDPOINT ?? "",
+                request
+            )
+                .then(response => {
+                    console.log("Response: ", response);
+                    console.log(`Response from Connector endpoint is: ${response.status}`);
+
+                    if (response.status === 200 || response.status === 302) {
+                        this.connectors.push("/connectors[]", {
+                            appType: req.body.appType,
+                            existing: true,
+                            groupName: req.body.groupName,
+                            user: req.body.user,
+                            webhookUrl: req.body.webhookUrl
+                        });
+                    }
+
+                    return response;
+                }).catch(error => {
+                    if (error.response) {
+                        console.log("axios - catch", error.response);
+
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+
+                        throw new Error("Invalid Credentials");
+                    } else {
+                        console.log("axios - catch-else", error);
+
+                        throw new Error("Invalid Credentials");
+                    }
+                });
+        } catch (e) {
+            console.log("axios - outer-catch", e);
+            throw new Error("Invalid Credentials");
         }
     }
 
-    public Ping(req: Request): Array<Promise <void>> {
+    public Ping(req: Request): Array<Promise<void>> {
         // clean up connectors marked to be deleted
         try {
             this.connectors.push("/connectors",
